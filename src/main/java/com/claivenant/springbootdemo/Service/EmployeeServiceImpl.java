@@ -1,5 +1,6 @@
 package com.claivenant.springbootdemo.Service;
 
+import com.claivenant.springbootdemo.Error.EmployeeNotFoundException;
 import com.claivenant.springbootdemo.Model.Employee;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class EmployeeServiceImpl implements EmployeeService{
     public Employee getEmployeeById(String id) {
         return employees.stream()
                 .filter(employee->employee.getEmployeeId()
-                        .equalsIgnoreCase(id)).findFirst().get();
+                        .equalsIgnoreCase(id)).findFirst()
+                .orElseThrow(()->new EmployeeNotFoundException("Employee not found with id : " +id));
     }
 }
